@@ -105,6 +105,19 @@ needs a local Whisper build under `vendor/` that this kit does **not** ship
 Setting Whisper up is out of scope here — see the comments in `lib/stt.js` if
 you want it later.
 
+## Step 8b — Daily brief location (optional)
+
+The proactive check-in (`proactive-checkin.js`) adds weather and prayer-time
+lines to a morning brief. They're region-specific:
+
+- `BRIEF_CITY` / `BRIEF_COUNTRY` — used for prayer times (Aladhan, Umm al-Qura
+  method). Leave `BRIEF_CITY` blank and the brief just omits the prayer line.
+- `BRIEF_LAT` / `BRIEF_LON` — weather coordinates. Default is the Qassim region;
+  set your own if you're elsewhere.
+
+The brief itself is composed by Claude with your calendar/Gmail/vault tools, so
+most of it works regardless of these.
+
 ## Step 9 — Always-on (optional, opt-in)
 
 Running `node bot.js` in a terminal stops when you close the terminal. To keep
