@@ -1,5 +1,5 @@
 // lib/heartbeat.js
-// Tells Thamer when inbound has gone silent.
+// Tells the owner when inbound has gone silent.
 //
 // The whole design rests on one fact from the 2026-08-10 outage: outbound
 // sendMessage worked perfectly for a week while inbound getUpdates was dead.

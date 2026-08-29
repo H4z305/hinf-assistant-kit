@@ -1,6 +1,6 @@
 # register-checkin-task.ps1
 # Registers a Windows Scheduled Task that runs proactive-checkin.js daily at 8:03am local time.
-# DO NOT RUN THIS SCRIPT WITHOUT ASKING THAMER FIRST — it creates standing OS-level automation,
+# DO NOT RUN THIS SCRIPT UNLESS YOU HAVE DECIDED YOU WANT STANDING OS-LEVEL AUTOMATION — it creates standing OS-level automation,
 # which the design spec explicitly requires his go-ahead for at execution time, not just at design time.
 
 $taskName = "EmilyTelegramCheckin"

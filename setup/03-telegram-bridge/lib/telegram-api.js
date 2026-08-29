@@ -1,7 +1,7 @@
 // lib/telegram-api.js
 // The ONLY place that knows how to talk HTTP to Telegram. Raw fetch is used
 // deliberately: proactive-checkin.js proved this exact transport works through
-// Thamer's network while the long-poll library did not.
+// the owner's network while the long-poll library did not.
 const DEFAULT_BASE_URL = "https://api.telegram.org";
 
 class TelegramError extends Error {

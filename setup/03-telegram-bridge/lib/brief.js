@@ -2,7 +2,7 @@
 // The morning brief. One implementation, two triggers: the 08:03 Scheduled Task
 // (proactive-checkin.js) and the /brief command.
 //
-// Thamer's direction: "more professional, more checkful, check the calendar
+// Design note from the original author's brief spec: "more professional, more checkful, check the calendar
 // thoroughly, check the week and flag something in the week, ask if I need to
 // add something in the calendar at what time, free or busy."
 //
@@ -13,9 +13,11 @@
 const path = require("path");
 const realFs = require("fs");
 
-// Buraydah, Qassim, Saudi Arabia
-const LAT = 26.326;
-const LON = 43.975;
+// Location for the weather + prayer-time lines of the brief. Defaults to the
+// Qassim region, Saudi Arabia; override via .env (BRIEF_LAT / BRIEF_LON /
+// BRIEF_CITY / BRIEF_COUNTRY). Leave BRIEF_CITY blank to drop the prayer line.
+const LAT = process.env.BRIEF_LAT || 26.326;
+const LON = process.env.BRIEF_LON || 43.975;
 
 // Open-Meteo: free, no API key. https://open-meteo.com/
 const WMO_DESCRIPTIONS = {
@@ -42,8 +44,17 @@ async function getWeather({ fetchFn = fetch } = {}) {
 }
 
 // Aladhan: free, no API key, method 4 = Umm al-Qura (used in Saudi Arabia).
-async function getPrayerTimes({ fetchFn = fetch } = {}) {
-  const url = "https://api.aladhan.com/v1/timingsByCity?city=Buraydah&country=Saudi%20Arabia&method=4";
+// Returns null when no BRIEF_CITY is configured — the caller renders that as
+// "unavailable" and the brief simply omits the prayer line.
+async function getPrayerTimes({
+  fetchFn = fetch,
+  city = process.env.BRIEF_CITY || "",
+  country = process.env.BRIEF_COUNTRY || "Saudi Arabia",
+} = {}) {
+  if (!city) return null;
+  const url =
+    `https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}` +
+    `&country=${encodeURIComponent(country)}&method=4`;
   const res = await fetchFn(url);
   if (!res.ok) throw new Error(`Aladhan failed: ${res.status}`);
   const data = await res.json();
@@ -52,10 +63,10 @@ async function getPrayerTimes({ fetchFn = fetch } = {}) {
 }
 
 function buildBriefPrompt({ weatherLine, prayerLine, statePath, showAll = false }) {
-  return `Compose Thamer's brief and reply with ONLY the message text to send over Telegram. No preamble, no "here's the brief" framing, no closing pleasantry.
+  return `Compose the owner's brief and reply with ONLY the message text to send over Telegram. No preamble, no "here's the brief" framing, no closing pleasantry.
 
-Weather (Buraydah): ${weatherLine || "unavailable"}
-Prayer times (Buraydah, Umm al-Qura): ${prayerLine || "unavailable"}
+Weather (your area): ${weatherLine || "unavailable"}
+Prayer times (your area, Umm al-Qura): ${prayerLine || "unavailable"}
 
 ## Structure — use these sections, in this order, every time
 
@@ -96,7 +107,7 @@ three places only, and each must carry information:
    slept well" — that is the theatre this rule exists to prevent.
 2. THE FLAGS state the finding AND its consequence. "Family lunch and gym both
    sit at 16:00. One has to move" beats "Overlap detected 16:00–17:00."
-3. FROM ME is written as you asking him, not as a form field.
+3. FROM ME is written as you asking them, not as a form field.
 
 Everywhere else stays clipped. 24-hour times. No adjective that does no work.
 At most one emoji, and only where it replaces a word. The data rows — weather,
@@ -111,15 +122,15 @@ invite is still unanswered. Do not summarise these away.
 
 ## Week ahead — findings only, never a listing
 
-Scan the next 7 days and surface only what is WRONG or MISSING. Never list his
-week back at him. The checks:
+Scan the next 7 days and surface only what is WRONG or MISSING. Never list their
+week back at them. The checks:
 - two events overlapping
 - back-to-back events in different locations with no travel gap
 - an event that implies a place but has no location set
 - an invite still unanswered
 - a P0/P1 in second-brain/wiki/hot.md or log.md falling this week with nothing
   blocked in the calendar against it
-- a weekday that is unusually empty against his normal pattern
+- a weekday that is unusually empty against their normal pattern
 - a timed event colliding with an all-day commitment
 
 ## Flag-once — this is what keeps thoroughness from becoming noise
@@ -135,13 +146,13 @@ Read ${statePath}. It already exists and is seeded for you (JSON:
   "overlap-2026-08-21-1600"), so the same finding matches itself tomorrow.
 - After composing the brief, WRITE the updated state back to that file.
 ${showAll ? "\n- OVERRIDE: this run was invoked with --all. Show every flag, including suppressed ones, and do not update the state file.\n" : ""}
-Without this, a thorough week scan repeats itself every morning until he stops
+Without this, a thorough week scan repeats itself every morning until they stop
 reading it.
 
 ## Inbox
 
 Check Gmail for anything unread or important in the last 16 hours. Flag only
-what genuinely needs him. Everything else is a count, not a list.
+what genuinely needs them. Everything else is a count, not a list.
 
 ## FROM ME — the two-way tail, at most three lines total
 
@@ -150,13 +161,13 @@ what genuinely needs him. Everything else is a count, not a list.
 2. THE STANDING INVITATION, always last:
    "Anything else going in today — time, and busy or free?"
 
-If he replies asking you to add something, you may CREATE or EDIT calendar
-events, but NEVER DELETE one — propose deletion and let him do it.
+If they ask you to add something, you may CREATE or EDIT calendar
+events, but NEVER DELETE one — propose deletion and let them do it.
 
-Before any write, echo the event back and wait for his confirmation: title,
+Before any write, echo the event back and wait for their confirmation: title,
 date, start–end, busy or free, location. Never infer an unstated time or
 busy/free state — ask. For an EDIT, show before → after on every field you are
-changing; a silent overwrite of the wrong event is the one mistake here he
+changing; a silent overwrite of the wrong event is the one mistake here they
 would not notice and could not easily undo.`;
 }
 
@@ -190,6 +201,7 @@ async function composeBrief({
   log = () => {},
   fetchFn = fetch,
   fsImpl = realFs,
+  briefCity = process.env.BRIEF_CITY || "",
 }) {
   ensureStateFile({ statePath, fsImpl, log });
 
@@ -202,7 +214,7 @@ async function composeBrief({
     log(`Weather fetch failed, continuing without it: ${err.message}`);
   }
   try {
-    prayerLine = await getPrayerTimes({ fetchFn });
+    prayerLine = await getPrayerTimes({ fetchFn, city: briefCity });
   } catch (err) {
     log(`Prayer times fetch failed, continuing without it: ${err.message}`);
   }

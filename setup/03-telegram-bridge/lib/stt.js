@@ -39,7 +39,7 @@ function oggToWav(inputPath, outputPath, { spawnFn = defaultSpawn, ffmpegPath = 
 }
 
 // whisper-cli prints backend/loading chatter as well as the transcript. Anything
-// that looks like a log line is dropped rather than read back to Thamer as if he
+// that looks like a log line is dropped rather than read back to the owner as if he
 // had said it.
 function parseTranscript(stdout) {
   return String(stdout || "")

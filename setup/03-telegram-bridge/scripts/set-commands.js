@@ -10,7 +10,7 @@
 // specific scope always wins over `default`: chat > all_private_chats /
 // all_group_chats / all_chat_administrators > default. The first run of this
 // script only ever set `default`, so it looked correct to getMyCommands() (which
-// also defaults to that scope) while Thamer's phone kept showing an
+// also defaults to that scope) while the owner's phone kept showing an
 // `all_private_chats` menu -- 30 more OpenClaw/Hermes commands (/resume,
 // /sessions, /branch, /undo, /agents...) that a plain default-scope check never
 // surfaces. `all_group_chats` carried a near-complete copy of the original 77.
@@ -77,9 +77,9 @@ async function main() {
 
   await api.setMyCommands({ commands: list });
   await api.setMyDescription({
-    description: "Thamer's personal assistant. Owner-locked -- nobody else can use this bot.",
+    description: "A personal Claude Code assistant. Owner-locked -- nobody else can use this bot.",
   });
-  await api.setMyShortDescription({ short_description: "Thamer's assistant." });
+  await api.setMyShortDescription({ short_description: "Personal assistant." });
 
   const after = await api.callApi("getMyCommands");
   console.log(`Now registered (default scope): ${after.length} commands.`);

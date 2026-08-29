@@ -53,7 +53,7 @@ test("truncates a description past Telegram's 256 character limit", () => {
 });
 
 // Regression guard for the actual bug: a stale all_private_chats/all_group_chats
-// scope shadowed the default-scope menu this script sets, so Thamer's phone kept
+// scope shadowed the default-scope menu this script sets, so the owner's phone kept
 // showing an OpenClaw command list even after "Now registered: 5 commands"
 // printed correctly. getMyCommands() with no scope argument -- what the script
 // checked -- also defaults to `default`, so the check looked clean while the

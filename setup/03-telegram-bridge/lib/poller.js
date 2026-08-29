@@ -2,7 +2,7 @@
 // The fix for the 2026-08-10 outage.
 //
 // Diagnosis: short request/response calls to api.telegram.org succeed through
-// Thamer's network; the long-held getUpdates connection is reaped at ~10s, which
+// the owner's network; the long-held getUpdates connection is reaped at ~10s, which
 // produced `TypeError: fetch failed` every 11 seconds for hours. So: try long
 // polling, and when it keeps failing, stop trying and poll short instead.
 const POLLER_DEFAULTS = {

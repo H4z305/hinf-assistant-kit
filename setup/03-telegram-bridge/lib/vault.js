@@ -30,7 +30,7 @@ Quick captures from Telegram via /log. Append-only, oldest first.
 Fold anything worth keeping into the proper page, then strike it here.
 `;
 
-// Thamer is in Buraydah. A capture stamped in UTC reads three hours wrong, which
+// the owner may be in a non-UTC timezone. A capture stamped in UTC reads three hours wrong, which
 // makes the timestamp worse than useless for reconstructing his day.
 function riyadhParts(date = new Date()) {
   const fmt = new Intl.DateTimeFormat("en-CA", {

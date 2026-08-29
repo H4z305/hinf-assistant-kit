@@ -1,7 +1,7 @@
 // lib/queue.js
 // Serialises Claude runs. Without this, two Telegram messages arriving close
 // together spawn two `claude` processes that both --resume the same session id,
-// which corrupts the transcript. The depth cap means Thamer gets told the queue
+// which corrupts the transcript. The depth cap means the owner gets told the queue
 // is full instead of watching messages vanish into a buffer.
 const DEFAULT_MAX_DEPTH = 5;
 

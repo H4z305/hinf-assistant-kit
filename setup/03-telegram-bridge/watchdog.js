@@ -1,7 +1,7 @@
 // watchdog.js
 // Restarts the bridge if it is not running. That is the whole job.
 //
-// HARD CONSTRAINT, Thamer's own words: "do not let it interrupt my pc play."
+// HARD CONSTRAINT, the owner's own words: "do not let it interrupt my pc play."
 // A task that fires every five minutes is exactly the thing that steals focus
 // mid-game, so every decision here is about staying invisible:
 //   - launched through wscript.exe + watchdog-hidden.vbs, so no console window

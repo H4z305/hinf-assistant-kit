@@ -3,7 +3,7 @@
 ' whole point: it means SW_HIDE, so nothing appears on screen -- not a window,
 ' not a taskbar entry, not a flash.
 '
-' This matters because the watchdog fires every five minutes. Thamer games on
+' This matters because the watchdog fires every five minutes. the owner games on
 ' this machine, and a cmd window stealing focus mid-match every five minutes
 ' would be worse than the outage this thing exists to prevent.
 '

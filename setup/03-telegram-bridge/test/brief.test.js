@@ -47,7 +47,7 @@ test("getWeather throws on a non-ok response", async () => {
 });
 
 test("getPrayerTimes renders all five prayers", async () => {
-  const line = await getPrayerTimes({ fetchFn: async () => okJson(PRAYER_BODY) });
+  const line = await getPrayerTimes({ fetchFn: async () => okJson(PRAYER_BODY), city: "Testville" });
   for (const p of ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]) {
     assert.ok(line.includes(p), `missing ${p}`);
   }
@@ -158,7 +158,7 @@ test("the prompt permits create and edit but forbids delete", () => {
   const p = buildBriefPrompt({ statePath: "S" });
   assert.match(p, /NEVER DELETE/);
   assert.match(p, /before . after/i, "edits must require a before/after diff");
-  assert.match(p, /wait for his confirmation/i);
+  assert.match(p, /wait for their confirmation/i);
 });
 
 test("--all mode overrides suppression and skips the state write", () => {
@@ -177,6 +177,7 @@ test("composeBrief passes the assembled prompt to the runner and returns its tex
   const out = await composeBrief({
     statePath: "S",
     fsImpl: noWriteFs(),
+    briefCity: "Testville",
     fetchFn: async (url) => okJson(String(url).includes("aladhan") ? PRAYER_BODY : WEATHER_BODY),
     runner: {
       run: async ({ prompt }) => {
@@ -197,6 +198,7 @@ test("composeBrief still produces a brief when weather and prayer both fail", as
   const out = await composeBrief({
     statePath: "S",
     fsImpl: noWriteFs(),
+    briefCity: "Testville",
     log: (m) => logs.push(m),
     fetchFn: async () => { throw new Error("network down"); },
     runner: { run: async ({ prompt }) => ({ text: "brief anyway", costUsd: 0 }) },
@@ -215,6 +217,6 @@ test("composeBrief marks unavailable inputs explicitly in the prompt", async () 
     runner: { run: async ({ prompt }) => { seenPrompt = prompt; return { text: "x" }; } },
   });
 
-  assert.match(seenPrompt, /Weather \(Buraydah\): unavailable/);
+  assert.match(seenPrompt, /Weather \(your area\): unavailable/);
   assert.match(seenPrompt, /Prayer times[^\n]*unavailable/);
 });

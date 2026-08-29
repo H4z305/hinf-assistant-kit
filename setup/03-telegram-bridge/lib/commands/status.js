@@ -26,7 +26,7 @@ module.exports = {
     const lastSuccess = formatSilence(poller.state.lastSuccessAt, now);
     const uptime = formatUptime(extra.startedAt ? now - extra.startedAt : NaN);
 
-    // Notional, not a charge -- Thamer is on subscription auth, not per-token
+    // Notional, not a charge -- the owner is on subscription auth, not per-token
     // API billing. Must always read this way; a bare "$" reads as money spent.
     const cost = audit && typeof audit.totalCostToday === "function" ? audit.totalCostToday() : 0;
 

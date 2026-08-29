@@ -255,7 +255,7 @@ function createRouter({
 
     const caption = String(attachment.caption || "").trim();
     const prompt = [
-      `Thamer sent a ${attachment.kind} from Telegram. It is saved at:`,
+      `the owner sent a ${attachment.kind} from Telegram. It is saved at:`,
       saved.path,
       "",
       caption ? `His caption: ${caption}` : "He sent it with no caption.",

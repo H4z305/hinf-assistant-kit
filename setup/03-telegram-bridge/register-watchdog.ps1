@@ -1,7 +1,7 @@
 # register-watchdog.ps1
 # Registers a Windows Scheduled Task that restarts the Telegram bridge if it dies.
 #
-# DO NOT RUN THIS SCRIPT WITHOUT ASKING THAMER FIRST -- it creates standing
+# DO NOT RUN THIS SCRIPT UNLESS YOU HAVE DECIDED YOU WANT STANDING OS-LEVEL AUTOMATION -- it creates standing
 # OS-level automation. He approved this specific registration on 2026-08-18;
 # that approval covers this task, not a standing licence for any future session
 # to re-register or alter OS automation.
@@ -55,7 +55,7 @@ if ($LASTEXITCODE -ne 0) {
 # Priority 7 is BelowNormal, so the watchdog can never contend with a game for
 # CPU. Battery restrictions are switched off so it keeps running on a laptop.
 # RunOnlyIfIdle is deliberately NOT set: it would disable the watchdog exactly
-# while Thamer is at the machine, which is when he would notice it missing.
+# while the owner is at the machine, which is when he would notice it missing.
 try {
     $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries `
                                              -DontStopIfGoingOnBatteries `

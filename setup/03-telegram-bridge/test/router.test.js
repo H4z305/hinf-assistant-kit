@@ -243,7 +243,7 @@ test("reports a claude failure with the stderr tail, not a pointer to the log", 
   await drain(h.router, [msgUpdate({ text: "hi" })]);
 
   assert.match(h.sent[0].text, /ENOENT spawn claude/);
-  assert.ok(!/bot\.log/i.test(h.sent[0].text), "must not fob Thamer off to a log file");
+  assert.ok(!/bot\.log/i.test(h.sent[0].text), "must not fob the owner off to a log file");
 });
 
 test("an aborted run reports being stopped, not an error", async () => {
