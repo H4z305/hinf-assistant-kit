@@ -1,0 +1,9 @@
+node_modules/
+.env
+*.log
+*.pid
+data/
+vendor/
+bot.health.json
+bot.paused
+.superpowers

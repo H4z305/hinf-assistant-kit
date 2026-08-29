@@ -134,10 +134,18 @@ Record both as now / later. Confirm before section 5.
 
 ## 8. Comms, if elected
 
-- Telegram = now → open `setup/03-telegram-bridge/SETUP.md` and follow it end
-  to end.
-- Syncthing = now → open `setup/04-syncthing.md` and follow it.
-- Either one deferred → do nothing here; the TODO is already in
+- **Telegram = now** → open `setup/03-telegram-bridge/SETUP.md` and follow it
+  step by step *with* the user. Explicitly walk them through, and ask them for,
+  each value as the guide reaches it:
+  - the bot token (guide them through @BotFather if they don't have one),
+  - their owner Telegram ID (offer both routes: @userinfobot, or start the
+    bridge and read the rejected-sender ID from `bot.log`),
+  - `CLAUDE_CWD` = their project dir, `VAULT_PATH` if not the default.
+  Write these into `setup/03-telegram-bridge/.env` (never echo the token back
+  in full; never commit `.env`). Then run the happy-path test and the
+  owner-lock rejection test from the guide before moving on.
+- **Syncthing = now** → open `setup/04-syncthing.md` and follow it with the user.
+- **Either one deferred** → do nothing here; the TODO is already in
   `<<PROJECT_DIR>>/CLAUDE.md`.
 
 ---
