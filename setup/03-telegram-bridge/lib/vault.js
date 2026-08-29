@@ -10,7 +10,7 @@ const HOT_RELATIVE = path.join("wiki", "hot.md");
 // The curated log.md says "Append-only. Newest entries at the top. Never edit
 // past entries." and its sections are substantial prose under `## DATE — Title`.
 // Raw one-line captures do not belong there and would degrade it, so /log writes
-// to the vault's own (previously empty) inbox folder instead. Emily can fold
+// to the vault's own (previously empty) inbox folder instead. Claude can fold
 // captures into log.md properly later.
 const CAPTURE_RELATIVE = path.join("wiki", "projects", "inbox", "Capture.md");
 
@@ -31,7 +31,7 @@ Fold anything worth keeping into the proper page, then strike it here.
 `;
 
 // the owner may be in a non-UTC timezone. A capture stamped in UTC reads three hours wrong, which
-// makes the timestamp worse than useless for reconstructing his day.
+// makes the timestamp worse than useless for reconstructing the day.
 function riyadhParts(date = new Date()) {
   const fmt = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Riyadh",

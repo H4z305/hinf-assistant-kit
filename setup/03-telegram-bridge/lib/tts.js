@@ -1,5 +1,5 @@
 // lib/tts.js
-// Voice replies. Uses msedge-tts -- free, no API key, and already Emily's voice
+// Voice replies. Uses msedge-tts -- free, no API key, and the default voice
 // on Discord, so she sounds like herself on both.
 //
 // Telegram's sendVoice wants OGG/Opus specifically; msedge-tts emits MP3. ffmpeg
@@ -12,7 +12,7 @@ const ENGLISH_VOICE = "en-US-AriaNeural";
 // voice is unlistenable, so the voice follows the script of the text.
 const ARABIC_VOICE = "ar-SA-ZariyahNeural";
 
-// A voice note of a 3000-character answer is useless -- he cannot skim audio.
+// A voice note of a 3000-character answer is useless -- nobody can skim audio.
 // The text reply always goes out in full alongside it, so truncating here loses
 // nothing.
 const MAX_SPOKEN_CHARS = 700;
@@ -90,7 +90,7 @@ function createTts({ api, log = () => {}, spawnFn, ffmpegPath, synthesiseFn = sy
     const mp3 = await synthesiseFn(body, {});
     const ogg = await mp3ToOggOpus(mp3, { spawnFn, ffmpegPath });
 
-    await api.sendVoice({ chat_id: chatId, buffer: ogg, filename: "emily.ogg" });
+    await api.sendVoice({ chat_id: chatId, buffer: ogg, filename: "reply.ogg" });
     log(`Spoke ${body.length} chars as ${ogg.length} bytes of opus.`);
   };
 }

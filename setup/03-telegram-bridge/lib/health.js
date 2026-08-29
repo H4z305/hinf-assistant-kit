@@ -3,9 +3,9 @@
 //
 // heartbeat.js already computes whether inbound is alive, but it reports over
 // sendMessage -- useful on the phone, invisible to anything else. This writes
-// the same facts where emily-ops can read them without touching the bot.
+// the same facts where an external monitor can read them without touching the bot.
 //
-// Cadence and payload shape deliberately mirror emily-discord-voice/bot.js so
+// Cadence and payload shape deliberately mirror a companion service so
 // both bots publish the same kind of thing.
 const realFs = require("fs");
 

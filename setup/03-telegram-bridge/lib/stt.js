@@ -2,8 +2,8 @@
 // Speech to text, entirely local. Telegram sends OGG/Opus; whisper.cpp wants
 // 16 kHz mono PCM WAV, so ffmpeg converts between them.
 //
-// Local by choice, not convenience: sending his voice notes to a hosted API
-// would put his messages -- vault contents, family, health -- on someone else's
+// Local by choice, not convenience: sending the owner's voice notes to a hosted API
+// would put those messages -- vault contents, family, health -- on someone else's
 // server. On the RTX 4070 large-v3-turbo transcribes a 30-second note in a few
 // seconds, so there is no quality argument for going remote either.
 //
@@ -39,7 +39,7 @@ function oggToWav(inputPath, outputPath, { spawnFn = defaultSpawn, ffmpegPath = 
 }
 
 // whisper-cli prints backend/loading chatter as well as the transcript. Anything
-// that looks like a log line is dropped rather than read back to the owner as if he
+// that looks like a log line is dropped rather than read back to the owner as if they
 // had said it.
 function parseTranscript(stdout) {
   return String(stdout || "")
@@ -60,7 +60,7 @@ function runWhisper(wavPath, { spawnFn = defaultSpawn, whisperPath, modelPath, t
       "-f", wavPath,
       "-nt",        // no timestamps
       "-np",        // no progress prints
-      "-l", "auto", // he switches between Arabic and English mid-conversation
+      "-l", "auto", // the owner switches between Arabic and English mid-conversation
     ]);
 
     let stdout = "";
@@ -108,7 +108,7 @@ function createStt({
   }
 
   return async function transcribe(audioPath) {
-    const wavPath = path.join(tmpDir, `emily-stt-${Date.now()}.wav`);
+    const wavPath = path.join(tmpDir, `stt-${Date.now()}.wav`);
 
     try {
       await oggToWav(audioPath, wavPath, { spawnFn, ffmpegPath });

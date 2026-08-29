@@ -64,7 +64,25 @@ bridge — not a default to copy. Full explanation in
 
 ## What's in here
 
-<!-- file map added at the end of the build (Task 9) -->
+```
+README-START-HERE.md          this file
+CLAUDE.bootstrap.md           copy to CLAUDE.md before your first session
+LICENSE.md                    MIT (fill in year + your name)
+onboarding/
+  first-run.md                the interview + setup runbook your Claude executes
+  CLAUDE.template.md          the persona/priority/context template it fills in
+second-brain/                 a scaffolded, empty PARA vault — copied into your
+                              project dir during onboarding
+program-context/
+  hinf-degree-roadmap.md      the HINF plan (program-wide facts only)
+setup/
+  01-plugins.md               marketplaces + which plugins to install
+  02-second-brain.md          install claude-obsidian, wire up the vault
+  03-telegram-bridge/         the phone bridge — source + SETUP.md
+  04-syncthing.md             mirror the vault across your devices
+  05-connectors.md            optional Gmail / Calendar / Drive
+  06-updates.md               how to pull fixes later
+```
 
 ---
 

@@ -1,4 +1,5 @@
 @echo off
+cd /d "%~dp0"
 if not exist bot.pid (
   echo No bot.pid found - bot doesn't appear to be running.
   exit /b 1

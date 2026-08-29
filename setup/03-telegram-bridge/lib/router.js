@@ -143,7 +143,7 @@ function createRouter({
         await sendReply(chatId, result.text);
 
         // Spoken to, speak back -- but text goes out first and always, so a TTS
-        // failure costs him the voice note, never the answer.
+        // failure costs the owner the voice note, never the answer.
         if (spoken && media && media.speak) {
           try {
             await media.speak(chatId, result.text);

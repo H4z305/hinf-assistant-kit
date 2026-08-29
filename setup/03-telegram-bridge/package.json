@@ -1,5 +1,5 @@
 {
-  "name": "emily-telegram",
+  "name": "telegram-bridge",
   "version": "1.0.0",
   "private": true,
   "description": "Local Telegram bridge to Claude Code for the owner — reactive chat plus proactive check-ins",

@@ -3,7 +3,7 @@
 //
 // The whole design rests on one fact from the 2026-08-10 outage: outbound
 // sendMessage worked perfectly for a week while inbound getUpdates was dead.
-// Every signal he could actually see -- the morning brief, arriving on time --
+// Every signal the owner could actually see -- the morning brief, arriving on time --
 // came from the half that still worked. So the alert goes out over sendMessage.
 //
 // A monitor that shares a failure mode with the thing it monitors is decoration.
@@ -57,7 +57,7 @@ function createHeartbeat({
       log(`Heartbeat alert sent: inbound silent for ${minutes}m, mode=${mode}.`);
     } catch (err) {
       // If this fails too, both directions are down and there is nothing left
-      // to tell him with. Log and carry on.
+      // to tell the owner with. Log and carry on.
       log(`Heartbeat alert failed to send: ${err.message}`);
     }
   }

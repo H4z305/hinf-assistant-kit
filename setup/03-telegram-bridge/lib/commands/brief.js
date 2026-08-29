@@ -13,7 +13,7 @@ module.exports = {
   async handler({ args, extra = {}, api, chatId, log = () => {} }) {
     const showAll = /(^|\s)--all(\s|$)/.test(String(args || ""));
 
-    // The brief takes a while; say so rather than leaving him staring at nothing.
+    // The brief takes a while; say so rather than leaving the owner staring at nothing.
     // Progress only wraps ordinary turns, not command handlers.
     if (api && chatId) {
       try {

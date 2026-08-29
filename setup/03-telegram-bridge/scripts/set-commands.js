@@ -2,8 +2,8 @@
 // One-shot migration of the bot's / menu.
 //
 // As of 2026-08-17 getMyCommands returned 77 entries, every one a leftover from
-// the dormant OpenClaw stack -- /restart described as "Restart OpenClaw", /clawhub,
-// /n8n_automation, several with Chinese descriptions. The bridge implemented one
+// a previous bot framework -- /restart described as "Restart <old bot>", 
+// several with Chinese descriptions. The bridge implemented one
 // of them. This replaces the lot.
 //
 // Telegram's command menu is not one list -- it is resolved per SCOPE, and a more
@@ -11,7 +11,7 @@
 // all_group_chats / all_chat_administrators > default. The first run of this
 // script only ever set `default`, so it looked correct to getMyCommands() (which
 // also defaults to that scope) while the owner's phone kept showing an
-// `all_private_chats` menu -- 30 more OpenClaw/Hermes commands (/resume,
+// `all_private_chats` menu -- 30 more leftover commands (/resume,
 // /sessions, /branch, /undo, /agents...) that a plain default-scope check never
 // surfaces. `all_group_chats` carried a near-complete copy of the original 77.
 // Both are now cleared explicitly, every run, so a stale scope can never again

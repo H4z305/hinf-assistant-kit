@@ -8,7 +8,7 @@
 //     is ever created, not even a flash
 //   - the restarted bridge is spawned detached, stdio ignored, windowsHide true
 //   - no output, no network, no notification -- anything worth saying goes to
-//     Telegram, which is his phone, not his desktop
+//     Telegram, which is a phone, not a desktop
 //   - runs at BelowNormal priority so it can never contend with a game
 //
 // The check itself is: read bot.pid, probe it, exit. Sub-100ms.
@@ -29,7 +29,7 @@ function checkAndRestart({
   botEntry = BOT_ENTRY,
   cwd = __dirname,
 }) {
-  // emily-ops sets this flag while it deliberately stops the bot. Without the
+  // an external monitor may set this flag while it deliberately stops the bot. Without the
   // check, Stop in the dashboard loses a race with this watchdog and the bot
   // comes back within the task interval, making the button look broken.
   if (fsImpl.existsSync(pauseFile)) return "paused";

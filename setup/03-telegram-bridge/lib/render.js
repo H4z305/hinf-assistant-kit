@@ -146,7 +146,7 @@ function renderForTelegram(markdown, { maxChunk = MAX_CHUNK, docThreshold = DOC_
   if (text.length > docThreshold) {
     return {
       mode: "document",
-      filename: `emily-${Date.now()}.md`,
+      filename: `transcript-${Date.now()}.md`,
       buffer: Buffer.from(text, "utf8"),
       caption: `Long answer — ${text.length} characters, sent as a file.`,
     };
@@ -162,7 +162,7 @@ function shouldSendAsDocument(text, threshold = DOC_THRESHOLD) {
 function asDocument(text) {
   const body = String(text || "");
   return {
-    filename: `emily-${Date.now()}.md`,
+    filename: `transcript-${Date.now()}.md`,
     buffer: Buffer.from(body, "utf8"),
     caption: `Long answer — ${body.length} characters, sent as a file.`,
   };

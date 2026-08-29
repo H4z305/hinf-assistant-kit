@@ -100,7 +100,7 @@ function main() {
   const media = {
     pick: pickAttachment,
     save: (attachment) => saveAttachment({ api, attachment, mediaDir }),
-    // Only fires when he actually sent a voice note, and only after the text
+    // Only fires when the owner actually sent a voice note, and only after the text
     // reply has already gone out.
     speak: createTts({ api, log }),
     // null when whisper.cpp or the model is missing, which the router reports
@@ -142,7 +142,7 @@ function main() {
   heartbeat.start();
 
   // Same facts as heartbeat.js, published to disk instead of Telegram, so
-  // emily-ops can distinguish "process alive" from "inbound alive".
+  // an external monitor can distinguish "process alive" from "inbound alive".
   const health = createHealth({ healthFile: HEALTH_FILE, poller, startedAt });
   health.start();
 
@@ -164,7 +164,7 @@ function main() {
   process.on("SIGINT", () => shutdown("SIGINT"));
   process.on("SIGTERM", () => shutdown("SIGTERM"));
 
-  log(`Emily Telegram Bridge started. cwd=${cfg.claudeCwd} pid=${process.pid}`);
+  log(`Telegram bridge started. cwd=${cfg.claudeCwd} pid=${process.pid}`);
 
   poller.run().then(() => {
     log(`Poller stopped (reason: ${poller.state.stopReason || "requested"}).`);

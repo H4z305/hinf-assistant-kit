@@ -11,7 +11,7 @@ const { CAPTURE_RELATIVE, HOT_RELATIVE } = require("../lib/vault");
 // These commands touch the real filesystem by design -- they are the two that
 // deliberately bypass Claude entirely -- so they get a real temp vault.
 function tempVault() {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "emily-vault-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "vault-"));
   return dir;
 }
 
