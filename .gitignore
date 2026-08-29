@@ -1,0 +1,9 @@
+# Local machine artifacts — never commit
+.env
+*.log
+*.pid
+node_modules/
+.DS_Store
+.obsidian/workspace*.json
+second-brain/.vault-meta/locks/
+second-brain/.vault-meta/transport.json
