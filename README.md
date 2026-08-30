@@ -65,7 +65,7 @@ bridge — not a default to copy. Full explanation in
 ## What's in here
 
 ```
-README-START-HERE.md          this file
+README.md                     this file
 CLAUDE.bootstrap.md           copy to CLAUDE.md before your first session
 LICENSE.md                    MIT (fill in year + your name)
 onboarding/
